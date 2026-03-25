@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}ZethUrban — Moda Urbana{% endblock %}
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <p class="hero-sub">Nueva Colección 2024</p>
+        <h1 class="hero-title">VISTE<br><span class="hero-accent">TU</span><br>CALLE</h1>
+        <p class="hero-desc">Ropa urbana auténtica para quienes no siguen tendencias — las crean.</p>
+        <div class="hero-btns">
+            <a href="/catalogo" class="btn-primary">Ver Catálogo</a>
+            <a href="/nosotros" class="btn-secondary">Nuestra Historia</a>
+        </div>
+    </div>
+    <div class="hero-scroll">↓</div>
+</section>
+
+<!-- CATEGORIAS -->
+<section class="categorias">
+    <div class="section-header">
+        <span class="section-tag">Explora</span>
+        <h2>CATEGORÍAS</h2>
+    </div>
+    <div class="cat-grid">
+        <a href="/catalogo?categoria=Ropa" class="cat-card cat-ropa">
+            <div class="cat-overlay"></div>
+            <div class="cat-content">
+                <h3>ROPA</h3>
+                <p>Hoodies · Poleras · Chaquetas</p>
+                <span class="cat-arrow">→</span>
+            </div>
+        </a>
+        <a href="/catalogo?categoria=Pantalones" class="cat-card cat-pantalones">
+            <div class="cat-overlay"></div>
+            <div class="cat-content">
+                <h3>PANTALONES</h3>
+                <p>Cargo · Jogger · Slim Fit</p>
+                <span class="cat-arrow">→</span>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- PRODUCTOS DESTACADOS -->
+<section class="destacados">
+    <div class="section-header">
+        <span class="section-tag">Lo más vendido</span>
+        <h2>DESTACADOS</h2>
+    </div>
+    <div class="productos-grid">
+        {% for producto in productos[:4] %}
+        <div class="producto-card" data-id="{{ producto.id }}">
+            <div class="producto-img-wrap">
+                <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" loading="lazy">
+                <div class="producto-overlay">
+                    <button class="btn-agregar" onclick="agregarAlCarrito({{ producto.id }})">+ Agregar</button>
+                </div>
+                <span class="producto-cat">{{ producto.categoria }}</span>
+            </div>
+            <div class="producto-info">
+                <h3>{{ producto.nombre }}</h3>
+                <p class="producto-precio">${{ '{:,.0f}'.format(producto.precio) }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="ver-mas">
+        <a href="/catalogo" class="btn-primary">Ver Todo el Catálogo</a>
+    </div>
+</section>
+
+<!-- BANNER -->
+<section class="banner-medio">
+    <div class="banner-content">
+        <h2>ENVÍOS A TODO CHILE</h2>
+        <p>Paga como quieras — transferencia, efectivo o tarjeta</p>
+        <a href="https://wa.me/56912345678" target="_blank" class="btn-whatsapp">
+            Consultar por WhatsApp
+        </a>
+    </div>
+</section>
+
+{% endblock %}

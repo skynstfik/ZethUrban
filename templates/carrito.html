@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Carrito — ZethUrban{% endblock %}
+{% block content %}
+
+<section class="carrito-page">
+    <div class="carrito-header">
+        <h1>MI CARRITO</h1>
+    </div>
+
+    <div class="carrito-container">
+        {% if carrito %}
+        <div class="carrito-items" id="carrito-items">
+            {% for item in carrito %}
+            <div class="carrito-item" id="item-{{ item.id }}">
+                <img src="{{ item.imagen }}" alt="{{ item.nombre }}">
+                <div class="item-info">
+                    <h3>{{ item.nombre }}</h3>
+                    <p class="item-precio">${{ '{:,.0f}'.format(item.precio) }}</p>
+                    <p class="item-cantidad">Cantidad: {{ item.cantidad }}</p>
+                </div>
+                <div class="item-actions">
+                    <p class="item-subtotal">${{ '{:,.0f}'.format(item.precio * item.cantidad) }}</p>
+                    <button class="btn-eliminar" onclick="eliminarItem({{ item.id }})">✕ Eliminar</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="carrito-resumen">
+            <h3>Resumen del pedido</h3>
+            <div class="resumen-linea">
+                <span>Subtotal</span>
+                <span id="total-precio">${{ '{:,.0f}'.format(total) }}</span>
+            </div>
+            <div class="resumen-linea">
+                <span>Envío</span>
+                <span>A coordinar</span>
+            </div>
+            <div class="resumen-total">
+                <span>Total</span>
+                <span id="total-final">${{ '{:,.0f}'.format(total) }}</span>
+            </div>
+            <a href="https://wa.me/56912345678?text=Hola%20ZethUrban!%20Quiero%20finalizar%20mi%20compra." target="_blank" class="btn-comprar">
+                Finalizar por WhatsApp
+            </a>
+            <a href="/catalogo" class="btn-seguir">← Seguir comprando</a>
+        </div>
+
+        {% else %}
+        <div class="carrito-vacio">
+            <div class="carrito-vacio-icon">🛒</div>
+            <h2>Tu carrito está vacío</h2>
+            <p>Agrega productos desde el catálogo</p>
+            <a href="/catalogo" class="btn-primary">Ver Catálogo</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

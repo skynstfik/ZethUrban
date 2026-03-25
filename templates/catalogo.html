@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Catálogo — ZethUrban{% endblock %}
+{% block content %}
+
+<section class="catalogo-page">
+    <div class="catalogo-header">
+        <h1>CATÁLOGO</h1>
+        <p>Toda la colección ZethUrban</p>
+    </div>
+
+    <div class="catalogo-container">
+        <!-- Filtros -->
+        <div class="filtros">
+            <h3>Filtrar por</h3>
+            <a href="/catalogo" class="filtro-btn {% if categoria == 'todos' %}active{% endif %}">Todos</a>
+            <a href="/catalogo?categoria=Ropa" class="filtro-btn {% if categoria == 'Ropa' %}active{% endif %}">Ropa</a>
+            <a href="/catalogo?categoria=Pantalones" class="filtro-btn {% if categoria == 'Pantalones' %}active{% endif %}">Pantalones</a>
+        </div>
+
+        <!-- Productos -->
+        <div class="productos-grid catalogo-grid">
+            {% for producto in productos %}
+            <div class="producto-card">
+                <div class="producto-img-wrap">
+                    <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" loading="lazy">
+                    <div class="producto-overlay">
+                        <button class="btn-agregar" onclick="agregarAlCarrito({{ producto.id }})">+ Agregar al carrito</button>
+                    </div>
+                    <span class="producto-cat">{{ producto.categoria }}</span>
+                </div>
+                <div class="producto-info">
+                    <h3>{{ producto.nombre }}</h3>
+                    <p class="producto-desc">{{ producto.descripcion }}</p>
+                    <div class="producto-tallas">
+                        {% for talla in producto.talla %}
+                        <span class="talla-tag">{{ talla }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="producto-footer">
+                        <p class="producto-precio">${{ '{:,.0f}'.format(producto.precio) }}</p>
+                        <button class="btn-agregar-sm" onclick="agregarAlCarrito({{ producto.id }})">Agregar</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
